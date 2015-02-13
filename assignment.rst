@@ -32,6 +32,7 @@ more than two columns.
 One solution which I have come up with is:
 
 The table will have four columns.
+
 * actor_id
 * target_id.role_id
 * target_id
@@ -83,4 +84,41 @@ Operations
 
   - This is a query on the LSI.
 
-* list_role_ids_for_groups_on_project
+* list_role_ids_for_groups_on_project(group_ids, project_id, project_domain_id, project_parents)
+
+  - This would be a query on LSI. Need to find more about project_parents.
+
+* list_project_ids_for_groups(self, group_ids, hints, inherited=False)
+
+  - Again this would be a query on primary key or LSI.
+
+* list_domain_ids_for_groups(self, group_ids, inherited=False)
+
+  - This would be a query on LSI with conditionals.
+
+* add_role_to_user_and_project(self, user_id, tenant_id, role_id)
+
+  - An insert to the table.
+
+* list_role_assignments()
+
+  - A scan through the table.
+
+* delete_project_assignments(self, project_id)
+
+  - A query on gsi target_id followed by multiple deletes.
+
+* delete_role_assignments(self, role_id)
+
+  - A query on gsi role_id follwed by multiple deletes.
+
+* delete_user(self, user_id)
+
+  - A query on primary key followed by deletes.
+
+* delete_group(self, group_id)
+
+  - A query on primary key followed by deletes.
+
+role
+====
