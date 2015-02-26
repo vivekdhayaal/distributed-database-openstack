@@ -1,0 +1,7 @@
+passed:
+test_default_project_id.py
+test_domains.py
+test_list_projects.py
+test_list_users.py (one failing test 'test_list_users_with_not_enabled', because of mdb bug)
+test_users.py
+test_groups.py

@@ -1,0 +1,35 @@
+{
+    "table_name": "group",
+    "attribute_definitions": [
+        {
+            "attribute_name": "id", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "name", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "extra", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "domain_id", 
+            "attribute_type": "S"
+        },
+        {
+            "attribute_name": "description",
+            "attribute_type": "S"
+        } 
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "domain_id", 
+            "key_type": "HASH"
+        }, 
+        {
+            "attribute_name": "name", 
+            "key_type": "RANGE"
+        }
+    ]
+}

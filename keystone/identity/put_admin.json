@@ -1,0 +1,20 @@
+
+{
+    "item": {
+        "id": {
+            "S": "1"
+        }, 
+        "name": {
+            "S": "admin"
+        },
+        "enabled": {
+            "N": 1 
+        }, 
+        "domain_id": {
+          "S": "default"
+        },
+        "password": {
+            "S": "$6$rounds=40000$carevFnAs0koXyET$EFzbGhCVbhFgyBDOT/V68dtSaTBdpFgslfhw9KeKJdK5U/QX1ghpaNCV.JcxsrGY13WtT8phuCHFDVPFlQhGB0"
+        }
+    }
+}

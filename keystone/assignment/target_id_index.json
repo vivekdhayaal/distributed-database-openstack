@@ -1,0 +1,29 @@
+{
+    "table_name": "target_id_index",
+    "attribute_definitions": [
+        {
+            "attribute_name": "actor_id", 
+            "attribute_type": "S"
+        }, 
+
+        {
+            "attribute_name": "target_id", 
+            "attribute_type": "S"
+        }, 
+
+        {
+            "attribute_name": "role_ids", 
+            "attribute_type": "SS"
+        } 
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "target_id", 
+            "key_type": "HASH"
+        }, 
+        {
+            "attribute_name": "actor_id", 
+            "key_type": "RANGE"
+        }
+    ]
+}

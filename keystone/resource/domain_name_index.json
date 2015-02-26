@@ -1,0 +1,28 @@
+{
+    "table_name": "domain_name_index",
+    "attribute_definitions": [
+        {
+            "attribute_name": "id", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "name", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "extra", 
+            "attribute_type": "S"
+        },
+        {
+            "attribute_name": "enabled", 
+            "attribute_type": "S"
+        }
+
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "name", 
+            "key_type": "HASH"
+        } 
+     ]
+}

@@ -1,0 +1,31 @@
+{
+    "table_name": "group_id_index",
+    "attribute_definitions": [
+        {
+            "attribute_name": "id", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "name", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "extra", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "domain_id", 
+            "attribute_type": "S"
+        },
+        {
+            "attribute_name": "description",
+            "attribute_type": "S"
+        } 
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "id", 
+            "key_type": "HASH"
+        } 
+    ]
+}

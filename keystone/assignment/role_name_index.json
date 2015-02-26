@@ -1,0 +1,15 @@
+{
+    "table_name": "role_name_index",
+    "attribute_definitions": [
+        {
+            "attribute_name": "name", 
+            "attribute_type": "S"
+        } 
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "name", 
+            "key_type": "HASH"
+        } 
+    ]
+}

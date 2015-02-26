@@ -1,0 +1,23 @@
+{
+    "table_name": "user_group",
+    "attribute_definitions": [
+        {
+            "attribute_name": "user_id", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "group_id", 
+            "attribute_type": "S"
+        } 
+      ], 
+    "key_schema": [
+        {
+            "attribute_name": "user_id", 
+            "key_type": "HASH"
+        }, 
+        {
+            "attribute_name": "group_id", 
+            "key_type": "RANGE"
+        }
+    ]
+}

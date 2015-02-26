@@ -1,0 +1,16 @@
+{
+    "item": {
+        "id": {
+            "S": "1"
+        }, 
+        "name": {
+            "S": "admin"
+        },
+        "enabled": {
+            "N": 1 
+        }, 
+        "domain_id": {
+          "S": "default"
+        }
+    }
+}

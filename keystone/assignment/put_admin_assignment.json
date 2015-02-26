@@ -1,0 +1,17 @@
+
+{
+    "item": {
+        "actor_id": {
+            "S": "1"
+        }, 
+        "target_id":{
+            "S": "1"
+        },
+        "role_ids": {
+            "SS": ["1"]
+        }, 
+        "type": {
+          "S": "UserProject"
+        }
+    }
+}

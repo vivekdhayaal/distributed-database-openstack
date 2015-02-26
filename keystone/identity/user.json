@@ -1,0 +1,48 @@
+{
+    "table_name": "user",
+    "attribute_definitions": [
+        {
+            "attribute_name": "id", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "name", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "password", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "extra", 
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "enabled", 
+            "attribute_type": "N"
+        },
+        {
+            "attribute_name": "domain_id", 
+            "attribute_type": "S"
+        },
+        {
+            "attribute_name": "default_project_id",
+            "attribute_type": "S"
+        }, 
+        {
+            "attribute_name": "groups",
+            "attribute_type": "SS"
+        } 
+
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "domain_id", 
+            "key_type": "HASH"
+        }, 
+        {
+            "attribute_name": "name", 
+            "key_type": "RANGE"
+        }
+    ]
+}

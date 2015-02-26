@@ -1,0 +1,33 @@
+{
+    "table_name": "assignment",
+    "attribute_definitions": [
+        {
+            "attribute_name": "actor_id", 
+            "attribute_type": "S"
+        }, 
+
+        {
+            "attribute_name": "target_id", 
+            "attribute_type": "S"
+        }, 
+
+        {
+            "attribute_name": "role_ids", 
+            "attribute_type": "SS"
+        }, 
+        {
+            "attribute_name": "type", 
+            "attribute_type": "S"
+        }
+    ], 
+    "key_schema": [
+        {
+            "attribute_name": "actor_id", 
+            "key_type": "HASH"
+        }, 
+        {
+            "attribute_name": "target_id", 
+            "key_type": "RANGE"
+        }
+    ]
+}
