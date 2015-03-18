@@ -1,5 +1,5 @@
 cd ~/stack/tempest
-for i in test_default_project_id test_domains test_list_projects test_list_users test_users test_groups test_roles test_projects test_projects_negative
+for i in test_default_project_id test_domains test_list_projects test_list_users test_users test_groups test_roles test_projects test_projects_negative test_trusts test_credentials
 do
     echo ==============
     echo "$i"

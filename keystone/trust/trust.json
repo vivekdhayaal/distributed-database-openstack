@@ -1,0 +1,51 @@
+{
+    "key_schema": [
+        {
+            "key_type": "HASH",
+            "attribute_name": "id"
+        }
+    ],
+    "table_name": "trust",
+    "attribute_definitions": [
+        {
+            "attribute_type": "S",
+            "attribute_name": "id"
+        },
+        {
+            "attribute_type": "S",
+            "attribute_name": "trustor_user_id"
+        },
+        {
+            "attribute_type": "S",
+            "attribute_name": "trustee_user_id"
+        },
+        {
+            "attribute_type": "S",
+            "attribute_name": "project_id"
+        },
+        {
+            "attribute_type": "S",
+            "attribute_name": "impersonation"
+        },
+        {
+            "attribute_type": "N",
+            "attribute_name": "deleted_at"
+        },
+        {
+            "attribute_type": "N",
+            "attribute_name": "expires_at"
+        },
+        {
+            "attribute_type": "N",
+            "attribute_name": "remaining_uses"
+        },
+        {
+            "attribute_type": "S",
+            "attribute_name": "extra"
+        },
+        {
+            "attribute_type": "SS",
+            "attribute_name": "roles"
+        }
+    ]
+}
