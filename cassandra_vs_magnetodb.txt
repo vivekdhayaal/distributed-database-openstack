@@ -1,0 +1,70 @@
+======================
+Cassandra vs MagnetoDB
+======================
+
+------------------------------------------------------
+Only two columns allowed as a part of key in MagnetoDB
+------------------------------------------------------
+If there are more than two columns in a key then C* wins over MagnetoDB. In C*
+you can have more than two columns as key whereas in MagnetoDB you can't have
+more then two columns. So if there is a table where we have for example three
+column and all the columns are a part of the key then in MagnetoDB you would
+have two columns as a part of key and make a collection of the third key. But
+if there is another column which is not a part of index but part of the table
+then you will have to serialize the third and fourth column and store it as a
+part of the collection.  Collection have a limit of 64000.  This is a problem
+since we are translating a relational schema to NoSql schema.
+
+-------------------
+Tunable consistency
+-------------------
+In Cassandra you can specify read consistency and write consistency as a part
+of the query whereas in MagnetoDB you can't. Of course we can bring such
+capabilities into MagnetoDB but that's not part of DynamDB api and we are not
+in the business of replicating every other Cassandra feature in MagnetoDB.
+Places where it is useful is for read-heavy workloads you can set read queries
+to return from 1 node and write queries to write to n nodes. This will gurantee
+consistency. Keystone is a very good example where data would be read heavy.
+
+------------------
+Migration strategy
+------------------
+There is no migration strategy available in MagnetoDB. If we are going to do so
+we would have to write one by ourselves. But incase of Cassandra there are
+solutions available which we can use.
+
+------------------------
+More work for ops people
+------------------------
+MagnetoDB is another service to maintain and deploy if you are going for NoSql
+solution in addition to the Cassandra nodes. That means more work for ops
+people. Cloud providers who are not going to provide MagnetoDB as a service
+would have to deploy MagnetoDB if the driver is MagnetoDB. We will get more
+people interested in deploying and maintaining Cassandra only solution.
+
+---------
+Stability
+---------
+MagnetoDB is not stable yet. While doing the POC I could find a some nasty bugs
+which would have proved costly in a prod system.
+
+----------
+Time frame
+----------
+If we are planning to bring MagnetoDB upto speed and then use it we would have
+to work around above limitations while still keeping it DynamoDB api
+compatible. With the current strength in our bench it would take at least one
+more year to do so. But if we use Cassandra directly then we have a possibility
+of doing it within a year given that upstream people are not hostile to our
+idea.
+
+----------
+Conclusion
+----------
+We have plans to provide database as a service to our customers but I don't see
+any reason to force ourselves to use it because our application requirements
+are completely different. Our applications were not designed keeping a NoSql
+backend in mind and we are giving up flexibility by using MagnetoDB which
+otherwise would be available if we go for Cassandra. We could build monitoring
+and metrics collection part of our cloud to use MagnetoDB if we are so
+insistent on using it ourselves before providing it to customers.
