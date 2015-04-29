@@ -41,46 +41,42 @@ volumes
 The five tables pertaining to volumes have the below schema in MySql.
 
 CREATE TABLE `volumes` (
-  `created_at` datetime DEFAULT NULL<br />
-  `updated_at` datetime DEFAULT NULL<br />
-  `deleted_at` datetime DEFAULT NULL<br />
-  `deleted` tinyint(1) DEFAULT NULL<br />
-  `id` varchar(36) NOT NULL<br />
-  `ec2_id` varchar(255) DEFAULT NULL<br />
-  `user_id` varchar(255) DEFAULT NULL<br />
-  `project_id` varchar(255) DEFAULT NULL<br />
-  `host` varchar(255) DEFAULT NULL<br />
-  `size` int(11) DEFAULT NULL<br />
-  `availability_zone` varchar(255) DEFAULT NULL<br />
-  `status` varchar(255) DEFAULT NULL<br />
-  `attach_status` varchar(255) DEFAULT NULL<br />
-  `scheduled_at` datetime DEFAULT NULL<br />
-  `launched_at` datetime DEFAULT NULL<br />
-  `terminated_at` datetime DEFAULT NULL<br />
-  `display_name` varchar(255) DEFAULT NULL<br />
-  `display_description` varchar(255) DEFAULT NULL<br />
-  `provider_location` varchar(256) DEFAULT NULL<br />
-  `provider_auth` varchar(256) DEFAULT NULL<br />
-  `snapshot_id` varchar(36) DEFAULT NULL<br />
-  `volume_type_id` varchar(36) DEFAULT NULL<br />
-  `source_volid` varchar(36) DEFAULT NULL<br />
-  `bootable` tinyint(1) DEFAULT NULL<br />
-  `provider_geometry` varchar(255) DEFAULT NULL<br />
-  `_name_id` varchar(36) DEFAULT NULL<br />
-  `encryption_key_id` varchar(36) DEFAULT NULL<br />
-  `migration_status` varchar(255) DEFAULT NULL<br />
-  `replication_status` varchar(255) DEFAULT NULL<br />
-  `replication_extended_status` varchar(255) DEFAULT NULL<br />
-  `replication_driver_data` varchar(255) DEFAULT NULL<br />
-  `consistencygroup_id` varchar(36) DEFAULT NULL<br />
-  `provider_id` varchar(255) DEFAULT NULL<br />
-  `multiattach` tinyint(1) DEFAULT NULL<br />
-  `attachments` map<varchar(255)<br /> blob> DEFAULT NULL
-  `volume_type_name` varchar(255) DEFAULT NULL
-  `volume_metadata` map<varchar(255)<br /> varchar(255)> DEFAULT NULL
-  `volume_admin_metadata` map<varchar(255)<br /> varchar(255)> DEFAULT NULL
-  PRIMARY KEY (`id`)<br />
-  KEY `consistencygroup_id` (`consistencygroup_id`)<br />
+  `created_at` datetime DEFAULT NULL>,
+  `updated_at` datetime DEFAULT NULL>,
+  `deleted_at` datetime DEFAULT NULL>,
+  `deleted` tinyint(1) DEFAULT NULL>,
+  `id` varchar(36) NOT NULL>,
+  `ec2_id` varchar(255) DEFAULT NULL>,
+  `user_id` varchar(255) DEFAULT NULL>,
+  `project_id` varchar(255) DEFAULT NULL>,
+  `host` varchar(255) DEFAULT NULL>,
+  `size` int(11) DEFAULT NULL>,
+  `availability_zone` varchar(255) DEFAULT NULL>,
+  `status` varchar(255) DEFAULT NULL>,
+  `attach_status` varchar(255) DEFAULT NULL>,
+  `scheduled_at` datetime DEFAULT NULL>,
+  `launched_at` datetime DEFAULT NULL>,
+  `terminated_at` datetime DEFAULT NULL>,
+  `display_name` varchar(255) DEFAULT NULL>,
+  `display_description` varchar(255) DEFAULT NULL>,
+  `provider_location` varchar(256) DEFAULT NULL>,
+  `provider_auth` varchar(256) DEFAULT NULL>,
+  `snapshot_id` varchar(36) DEFAULT NULL>,
+  `volume_type_id` varchar(36) DEFAULT NULL>,
+  `source_volid` varchar(36) DEFAULT NULL>,
+  `bootable` tinyint(1) DEFAULT NULL>,
+  `provider_geometry` varchar(255) DEFAULT NULL>,
+  `_name_id` varchar(36) DEFAULT NULL>,
+  `encryption_key_id` varchar(36) DEFAULT NULL>,
+  `migration_status` varchar(255) DEFAULT NULL>,
+  `replication_status` varchar(255) DEFAULT NULL>,
+  `replication_extended_status` varchar(255) DEFAULT NULL>,
+  `replication_driver_data` varchar(255) DEFAULT NULL>,
+  `consistencygroup_id` varchar(36) DEFAULT NULL>,
+  `provider_id` varchar(255) DEFAULT NULL>,
+  `multiattach` tinyint(1) DEFAULT NULL>,
+  PRIMARY KEY (`id`)>,
+  KEY `consistencygroup_id` (`consistencygroup_id`)>,
   CONSTRAINT `volumes_ibfk_1` FOREIGN KEY (`consistencygroup_id`) REFERENCES `consistencygroups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
@@ -162,15 +158,38 @@ The volume_metadata, volume_admin_metadata and volume_glance_metadata tables con
 Operations: REST API - DB API
 -----------------------------
 
-|cinder create - get_volume_type_by_name, get_volume_type, get_snapshot, quoto_reserve,create_quota_commit
-|cinder delete - snapshot_get_all_for_volume; can't delete if snapshots exist
-|cinder extend - quota_rerserve,update,rpc_extend 
-|cinder force-delete - 
-|cinder list - volume_get_all or volume_get_all_by_project
-|cinder metadata - 
-|cinder metadata-show - 
-|cinder metadata-update-all - volume_metadata_update
-|cinder migrate - 
+cinder create - get_volume_type_by_name, get_volume_type, quoto_reserve,volume_create,reservation_commit
+
+cinder delete - snapshot_get_all_for_volume; can't delete if snapshots exist; volume_glance_metadata_delete_by_volume, volume_destroy
+
+cinder extend - quota_reserve,volume_update,reservation_commit
+
+cinder force-delete
+
+cinder list - volume_get_all or volume_get_all_by_project
+
+cinder metadata - volume_metadata_update
+
+cinder metadata-show - volume_metadata_get
+
+cinder metadata-update-all - volume_metadata_update
+
+cinder migrate - volume_update
+
+nova volume-attach - get_volume,volume_attach,volume_attachment_get_by_instance_uuid(filter=vol_id,inst_uuid,attch_status) or volume_attachment_get_by_host, volume_attach,volume_attachment_update,volume_attached,volume_update,volume_attachment_get
+
+nova volume-create
+
+nova volume-delete
+
+nova volume-detach - volume_attachment_get or volume_attachment_get_used_by_volume_id,volume_get,volume_detached,volume_admin_metadata_delete(attached_mode),volume_get
+
+nova volume-list
+
+nova volume-show - volume_get
+
+nova volume-update
+
 
 * volume_attach(context, values) - create new volume attachment
 
@@ -307,21 +326,49 @@ CREATE TABLE `quality_of_service_specs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
-The volume_type_extra_specs table is merged with volumes table with the addition of new column.
+The volume_type_extra_specs & volume_type_projects tables are merged with volumes table with the addition of new columns.
 
 * volume_type_extra_specs - key:value map - to associate volume_types with extra_specs 
 
-The volume_type_projects table would contain two columns:
-
-* status - public or private
-* project - public projects have no entry here;
-            private projects have project id here.
-this table supports querying volume_types by status 'public' or by a given project id.
+* volume_type_projects - list of projects in which this volume type is exposed
 
 The quality_of_service_specs table in MagnetoDB shall have three columns uuid, name and map of specs. To support the query to fetch all volume_types associated with a given qos_spec, we can either create a secondary index on qos_specs_id column in volume_types table or add a new column 'volume_types' in quality_of_service_specs tables that contains a list of associated volume_types.
 
-Operations
-----------
+Operations: REST API - DB API
+-----------------------------
+
+cinder type-create - volume_type_create
+
+cinder type-delete - volume_type_update
+
+cinder type-key - volume_type_extra_specs_update_or_create
+
+cinder type-list - volume_type_get_all
+
+cinder qos-associate - volume_type_qos_associate
+
+cinder qos-create - qos_specs_create,get_qos_specs_by_name,qos_specs_update
+
+cinder qos-delete - qos_specs_delete
+
+cinder qos-disassociate - volume_type_qos_disassociate
+
+cinder qos-disassociate-all - volume_type_qos_disassociate_all
+
+cinder qos-get-association - qos_specs_associations_get
+
+cinder qos-key - qos_specs_update,qos_specs_item_delete
+
+cinder qos-list - qos_specs_get_all
+
+cinder qos-show - qos_specs_get
+
+nova volume-type-create
+
+nova volume-type-delete
+
+nova volume-type-list
+
 
 * volume_type_create(context, values, projects=None)
 
@@ -432,8 +479,27 @@ The snapshot_metadata table is merged with snapshots table with the addition of 
 
 * snapshot_metadata - key:value properties map
 
-Operations
-----------
+Operations: REST API - DB API
+-----------------------------
+
+cinder snapshot-create - snapshot_create
+
+cinder snapshot-delete - snapshot_destroy
+
+cinder snapshot-list - allowed_search_options = ('status', 'volume_id', 'name') - snapshot_get_all or snapshot_get_all_by_project
+
+cinder snapshot-metadata - snapshot_metadata_update
+
+cinder snapshot-metadata-show  - snapshot_metadata_get
+
+cinder snapshot-metadata-update-all - snapshot_metadata_update
+
+cinder snapshot-rename - snapshot_update
+
+cinder snapshot-reset-state - snapshot_update
+
+cinder snapshot-show - snapshot_get
+
 
 * snapshot_create(context, values)
 
@@ -502,6 +568,11 @@ CREATE TABLE `cgsnapshots` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 These two tables look the same in MagnetoDB as well. 
+
+consistency group create (using volume types) - get_volume_type_qos_specs
+consistency group create from src - cgsnapshot_get,consistencygroup_get,consistencygroup_create, snapshot_get_all_for_cgsnapshot,volume_create,consistencygroup_destroy,volume_get_all_by_group,volume_update,
+consistency group delete - snapshot_get_all_for_volume
+
 
 Operations
 ----------
@@ -601,8 +672,23 @@ CREATE TABLE `reservations` (
 
 These four tables have the same schema in MagnetoDB as well.
 
-Operations
-----------
+Operations: REST API - DB API
+-----------------------------
+
+cinder quota-class-show - quota_class_get_all_by_name(context, quota_class),quota_class_get_default(context)
+
+cinder quota-class-update - quota_class_update
+
+cinder quota-defaults - quota_class_get_default, 
+
+cinder quota-delete - quota_destroy_all_by_project
+
+cinder quota-show - quota_get_all_by_project(context, project_id)
+
+cinder quota-update - quota_update
+
+cinder quota-usage - quota_usage_get_all_by_project
+
 
 * quota_get(context, project_id, resource)
 
